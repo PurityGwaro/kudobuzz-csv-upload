@@ -6,12 +6,13 @@ import { useParams } from "react-router-dom";
 export default function EditCustomer() {
 
     const { REACT_APP_API_BASE_URL } = process.env;
-    const [customer, setCustomer] = useState([]);
+    const [customer, setCustomer] = useState({});
 
     const { id } = useParams();
 
     const handleChange = (e) => {
       setCustomer({ ...customer, [e.target.name]: e.target.value });
+      console.log(customer);
   }
 
    // change values in the form to the values edited on the form by the user
@@ -19,9 +20,10 @@ export default function EditCustomer() {
       console.log(id);
         e.preventDefault();
         axios
-            .put(`${REACT_APP_API_BASE_URL}/customer/${id}`)
+            .put(`${REACT_APP_API_BASE_URL}/customer/${id}`,customer)
             .then(({ data, status }) => {
                 if (status === 200) {
+                  console.log(data);
                     setCustomer(data);
                 }
             }

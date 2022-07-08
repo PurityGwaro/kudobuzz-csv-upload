@@ -30,8 +30,9 @@ export default function CustomerUI() {
         }
       });
   }, [id, searchParams]);
+
   const handleDelete = (id) => {
-    console.log(id);
+    //console.log(id);
     axios
       .delete(`${REACT_APP_API_BASE_URL}/customer/${id}`)
       .then(({ data, status }) => {
@@ -88,6 +89,8 @@ export default function CustomerUI() {
           <div className="mb-2">
             <CustomPagination paginationData={paginationData} />
           </div>
+          
+
         </div>
       </div>
     </div>
