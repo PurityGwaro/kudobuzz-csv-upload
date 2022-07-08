@@ -19,3 +19,11 @@ What I should have done better:
 - structure the code better to make it readable,
 - styled the UI more to make it more appealing
 
+Technologies used:
+- frontend - reactjs
+- backend - node
+- database - mongodb
+
+Instructions to start the app:
+- cd backend - npm start
+- cd frontend - npm start
