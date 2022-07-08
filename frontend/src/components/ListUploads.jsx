@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -20,6 +19,10 @@ export default function ListUploads() {
 
     return () => {};
   }, []);
+  const handleDelete = async (id) => {
+    await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/uploads/${id}`);
+    setFiles(files.filter(file => file.id !== id));
+  }
 
   return (
     <div className="container">
@@ -47,12 +50,9 @@ export default function ListUploads() {
                       >
                         view
                       </Link>
-                      <Link
-                        to="/"
-                        className="btn float-right btn-primary btn-sm"
-                      >
+                      <Button onClick={() => handleDelete(file._id)} className="btn float-right btn-danger btn-sm">
                         delete
-                      </Link>
+                      </Button>
                     </td>
                   </tr>
                 );

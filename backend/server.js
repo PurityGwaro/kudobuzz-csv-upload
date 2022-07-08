@@ -94,6 +94,7 @@ app.post("/api/upload", upload.single("csv_file"), (req, res) => {
   });
 });
 
+
 app.get("/api/uploads", async (req, res) => {
   const files = await File.find().sort({ createdAt: -1 });
   console.log(files);
@@ -112,8 +113,66 @@ app.get("/api/records/:id", async (req, res) => {
       limit: req.query.perPage || 10,
     }
   );
-
   res.json({
     customerData,
   });
 });
+
+app.delete("/api/uploads/:id", async (req, res) => {
+  const file = await File.findById(req.params.id);
+  if (file) {
+    await Customer.deleteMany({ fileId: req.params.id });
+    await File.deleteOne({ _id: req.params.id });
+    res.json({
+      message: "File deleted",
+    });
+  } else {
+    res.json({
+      message: "File not found",
+    });
+  }
+});
+
+// //delete file
+// app.delete('/api/records/:id', (req, res) => {
+//   Customer.deleteMany({ fileId: req.params.id }, (err) => {})
+//   .then(() => {
+//   }).
+//   catch((err) => {
+//     console.log(err);
+//   })
+//     File.findByIdAndDelete(req.params.id, (err, result) => {
+//     if (err) {
+//       res.status(500).json({
+//         message: "Error deleting records",
+//       });
+//     } else {
+//       res.status(200).json({
+//         message: "Records deleted",
+//       });
+//     }
+//   });
+// })
+
+// app.delete("/api/records/:id", (req, res) => {
+//   const id = req.params.id;
+//   File.deleteOne({ _id: id }).then((data) => {
+//     res.json({
+//       message: "Deleted",
+//       data,
+//     });
+//   });
+// }
+// //delete customer
+// app.delete("/api/delete/:id", (req, res) => {
+//   const id = req.params.id;
+//   Customer.deleteOne({ _id: id }).then((data) => {
+//     res.json({
+//       message: "Deleted",
+//       data,
+//     });
+//   });
+// };
+
+// //delete file
+
