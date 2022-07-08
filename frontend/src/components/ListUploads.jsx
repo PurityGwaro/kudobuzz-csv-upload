@@ -22,6 +22,8 @@ export default function ListUploads() {
   const handleDelete = async (id) => {
     await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/uploads/${id}`);
     setFiles(files.filter(file => file.id !== id));
+    //refresh page
+    window.location.reload();
   }
 
   return (

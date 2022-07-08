@@ -4,6 +4,7 @@ import ViewCsv from "./components/ViewCsv";
 import UploadForm from "./components/UploadForm";
 import LoginPage from "./components/LoginPage";
 import Error from "./components/Error";
+import EditCustomer from './components/EditCustomer';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/csv/:id" exact element={<ViewCsv />} />
         <Route path="/upload" exact element={<UploadForm />} />
         <Route path="/logout" exact element={<LoginPage />} />
+        <Route path="/edit/:id" exact element={<EditCustomer />} />
         <Route path="*" component={<Error />} />
       </Routes>
     </Router>

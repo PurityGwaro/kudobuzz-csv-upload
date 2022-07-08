@@ -24,6 +24,8 @@ export default function UploadForm() {
       .catch((err) => {
         console.log(err);
       });
+      //go back to the home page
+      window.location.href = "/";
     // fetch(`${REACT_APP_API_BASE_URL}/upload`, {
     //   method: "POST",
     //   body: formData,

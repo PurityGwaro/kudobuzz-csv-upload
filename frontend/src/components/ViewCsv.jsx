@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import Navbar from "./Navbar";
 import CustomPagination from "./Pagination";
 
 export default function CustomerUI() {
@@ -30,6 +30,22 @@ export default function CustomerUI() {
         }
       });
   }, [id, searchParams]);
+  const handleDelete = (id) => {
+    console.log(id);
+    axios
+      .delete(`${REACT_APP_API_BASE_URL}/customer/${id}`)
+      .then(({ data, status }) => {
+        if (status === 200) {
+          setCustomers(customers.filter((customer) => customer.id !== id));
+        }
+      }).catch(err => console.log(err));
+      //reload page
+      window.location.reload();
+  }
+
+  // const handleEdit = (id) => {
+  //   window.location.href = `/edit/${id}`;
+  // }
 
   return (
     <div className="container">
@@ -47,24 +63,22 @@ export default function CustomerUI() {
             <tbody>
               {customers.map((customer, index) => {
                 return (
-                  <tr key={customer.id}>
+                  <tr key={customer._id}>
                     <td>{customer.name}</td>
                     <td>{customer.phone}</td>
                     <td>{customer.email}</td>
                     <td>{customer.createdAt}</td>
                     <td>
-                      <Link
-                        to='/'
-                        className="btn float-right btn-primary btn-sm"
-                      >
+                      {/* edit button */}
+                      <Link to={`/edit/${customer._id}`} className="btn float-right btn-primary btn-sm">
                         edit
                       </Link>
-                      <Link
-                        to="/"
-                        className="btn float-right btn-primary btn-sm"
-                      >
+                      {/* <Button variant="primary" onClick={() => handleEdit(customer.id)}>
+                        Edit
+                      </Button> */}
+                      <Button  onClick={()=> handleDelete(customer._id)} variant="danger" className="float-right btn-sm">
                         delete
-                      </Link>
+                      </Button>
                     </td>
                   </tr>
                 );

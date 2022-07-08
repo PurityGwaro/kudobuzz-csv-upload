@@ -133,46 +133,28 @@ app.delete("/api/uploads/:id", async (req, res) => {
   }
 });
 
-// //delete file
-// app.delete('/api/records/:id', (req, res) => {
-//   Customer.deleteMany({ fileId: req.params.id }, (err) => {})
-//   .then(() => {
-//   }).
-//   catch((err) => {
-//     console.log(err);
-//   })
-//     File.findByIdAndDelete(req.params.id, (err, result) => {
-//     if (err) {
-//       res.status(500).json({
-//         message: "Error deleting records",
-//       });
-//     } else {
-//       res.status(200).json({
-//         message: "Records deleted",
-//       });
-//     }
-//   });
-// })
 
-// app.delete("/api/records/:id", (req, res) => {
-//   const id = req.params.id;
-//   File.deleteOne({ _id: id }).then((data) => {
-//     res.json({
-//       message: "Deleted",
-//       data,
-//     });
-//   });
-// }
-// //delete customer
-// app.delete("/api/delete/:id", (req, res) => {
-//   const id = req.params.id;
-//   Customer.deleteOne({ _id: id }).then((data) => {
-//     res.json({
-//       message: "Deleted",
-//       data,
-//     });
-//   });
-// };
+//delete customer
+app.delete("/api/customer/:id", (req, res) => {
+  const id = req.params.id;
+  Customer.deleteOne({ _id: id }).then((data) => {
+    res.json({
+      message: "Deleted",
+      data,
+    });
+  });
+});
 
-// //delete file
+//edit customer
+app.put("/api/customer/:id", (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  Customer.findByIdAndUpdate(id, data).then((data) => {
+    res.json({
+      message: "Updated",
+      data,
+    });
+  });
+});
+
 
