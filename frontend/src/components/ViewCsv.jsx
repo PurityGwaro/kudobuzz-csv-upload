@@ -89,7 +89,9 @@ export default function CustomerUI() {
           <div className="mb-2">
             <CustomPagination paginationData={paginationData} />
           </div>
-          
+          <Link to='/' className="btn btn-primary">
+            Back
+          </Link>
 
         </div>
       </div>
