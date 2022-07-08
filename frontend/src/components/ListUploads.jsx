@@ -47,6 +47,12 @@ export default function ListUploads() {
                       >
                         view
                       </Link>
+                      <Link
+                        to="/"
+                        className="btn float-right btn-primary btn-sm"
+                      >
+                        delete
+                      </Link>
                     </td>
                   </tr>
                 );

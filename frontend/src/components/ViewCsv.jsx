@@ -52,6 +52,20 @@ export default function CustomerUI() {
                     <td>{customer.phone}</td>
                     <td>{customer.email}</td>
                     <td>{customer.createdAt}</td>
+                    <td>
+                      <Link
+                        to='/'
+                        className="btn float-right btn-primary btn-sm"
+                      >
+                        edit
+                      </Link>
+                      <Link
+                        to="/"
+                        className="btn float-right btn-primary btn-sm"
+                      >
+                        delete
+                      </Link>
+                    </td>
                   </tr>
                 );
               })}
