@@ -154,10 +154,6 @@ app.put("/api/customer/:id", async (req, res) => {
 
   let doc = await Customer.findOne({ id: req.params.id });
 
-  // Document changed in MongoDB, but not in Mongoose
-  //await Customer.updateOne(filter, { name: 'Will Riker' });
-
-  // This will update `doc` age to `59`, even though the doc changed.
   doc.name = req.body.name;
   console.log(req.body.name);
   doc.email = req.body.email;
@@ -169,21 +165,6 @@ app.put("/api/customer/:id", async (req, res) => {
     message: "Updated",
     data: doc,
   });
-
-
-//   let customerData = await Customer.findOneAndUpdate(filter, data, {
-//     new: true,
-//   });
-
-// console.log(customerData.save());
-  // const id = req.params.id;
-  // const data = req.body;
-  // Customer.findByIdAndUpdate(id, data).then((data) => {
-  //   res.json({
-  //     message: "Updated",
-  //     data,
-  //   });
-  // });
 
 });
 
