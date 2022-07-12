@@ -28,8 +28,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/upload", upload.single("csv_file"), (req, res) => {
-  csvData = req.file;
-  fileExtension = csvData.originalname.split(".").pop();
+  let csvData = req.file;
+  let fileExtension = csvData.originalname.split(".").pop();
   const file = fs.readFileSync(`${csvData.path}`, {
     encoding: "utf8",
   });
@@ -48,7 +48,9 @@ app.post("/api/upload", upload.single("csv_file"), (req, res) => {
 
   const processedData = parseArrayOfData.map((dataRow) => {
     const dataObject = {};
+    //console.log({ dataRow, headers });
     dataRow.map((data, index) => {
+      //assigns each row to its own header
       dataObject[headers[index]] = data;
     });
     return dataObject;
@@ -59,6 +61,7 @@ app.post("/api/upload", upload.single("csv_file"), (req, res) => {
   const fileInstance = new File({
     name: csvData.originalname,
   });
+
   fileInstance.save().then((file) => {
     for (let i = 0; i < processedData.length; i++) {
       const saveCustomer = async () => {
@@ -97,7 +100,7 @@ app.post("/api/upload", upload.single("csv_file"), (req, res) => {
 
 app.get("/api/uploads", async (req, res) => {
   const files = await File.find().sort({ createdAt: -1 });
-  console.log(files);
+  //console.log(files);
   res.json({
     files,
   });
@@ -112,12 +115,19 @@ app.get("/api/records/:id", async (req, res) => {
       page: req.query.page || 1,
       limit: req.query.perPage || 10,
     }
-  );
+  ).then((customers) => {
+    console.log(customers);
+    return customers;
+  }).catch((err) => {
+    console.log(err);
+  });
+  //console.log(customerData);
   res.json({
     customerData,
   });
 });
 
+//delete file
 app.delete("/api/uploads/:id", async (req, res) => {
   const file = await File.findById(req.params.id);
   if (file) {
@@ -150,17 +160,18 @@ app.put("/api/customer/:id", async (req, res) => {
   const filter = { id: req.params.id };
   const data = { name: req.body.name, email: req.body.email, phone: req.body.phone };
 
-
+  //console.log({ filter, data });
 
   let doc = await Customer.findOne({ id: req.params.id });
 
+  console.log({ doc });
   doc.name = req.body.name;
-  console.log(req.body.name);
+  //console.log(req.body.name);
   doc.email = req.body.email;
   doc.phone = req.body.phone;
-  await doc.save();
 
-  doc = await Customer.findOne({id: req.params.id});
+  await doc.save();
+  console.log({ doc });
   res.json({
     message: "Updated",
     data: doc,

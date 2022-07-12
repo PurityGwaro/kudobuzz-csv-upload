@@ -74,9 +74,6 @@ export default function CustomerUI() {
                       <Link to={`/edit/${customer._id}`} className="btn float-right btn-primary btn-sm">
                         edit
                       </Link>
-                      {/* <Button variant="primary" onClick={() => handleEdit(customer.id)}>
-                        Edit
-                      </Button> */}
                       <Button  onClick={()=> handleDelete(customer._id)} variant="danger" className="float-right btn-sm">
                         delete
                       </Button>

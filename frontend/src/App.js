@@ -1,13 +1,15 @@
-import ClientUI from "./components/ClientUI";
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ViewCsv from "./components/ViewCsv";
-import UploadForm from "./components/UploadForm";
-import LoginPage from "./components/LoginPage";
-import Error from "./components/Error";
-import EditCustomer from './components/EditCustomer';
+const ViewCsv = React.lazy(() => import('./components/ViewCsv'));
+const Error = React.lazy(() => import('./components/Error'));
+const LoginPage = React.lazy(() => import('./components/LoginPage'));
+const ClientUI = React.lazy(() => import('./components/ClientUI'));
+const UploadForm = React.lazy(() => import('./components/UploadForm'));
+const EditCustomer = React.lazy(() => import('./components/EditCustomer'));
 
 function App() {
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <Router>
       <Routes>
         <Route path="/" element={<ClientUI />} />
@@ -18,9 +20,7 @@ function App() {
         <Route path="*" component={<Error />} />
       </Routes>
     </Router>
-    // <div>
-    //   <ClientUI/>
-    // </div>
+    </Suspense>
   );
 }
 

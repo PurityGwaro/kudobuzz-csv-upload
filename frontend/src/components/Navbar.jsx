@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 
 export default function ClientUI() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={
+      {
+        marginBottom: '10px',
+      }
+    }>
         <Container>
         <Navbar.Brand href="/">CSV UPLOAD</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
