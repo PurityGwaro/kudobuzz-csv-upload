@@ -12,24 +12,27 @@ export default function UploadForm() {
   };
 
   const uploadFile = (e) => {
-    console.log({ REACT_APP_API_BASE_URL });
+    //console.log({ REACT_APP_API_BASE_URL });
     e.preventDefault();
+
     const formData = new FormData();
-    formData.append("csv_file", file);
+
+    formData.append("csv_file", file);//appends data to an object(formData)
+
     axios
       .post(`${REACT_APP_API_BASE_URL}/upload`, formData)
       .then((res) => {
         console.log(res);
+        //go back to the home page
+        window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.status === 400) {
+          alert("Only .csv files are allowed. Try again.");
+        }
       });
-      //go back to the home page
-      window.location.href = "/";
-    // fetch(`${REACT_APP_API_BASE_URL}/upload`, {
-    //   method: "POST",
-    //   body: formData,
-    // });
+    
   };
   return (
     <div className="container">

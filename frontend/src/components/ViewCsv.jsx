@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CustomPagination from "./Pagination";
 
 export default function CustomerUI() {
@@ -20,10 +20,8 @@ export default function CustomerUI() {
   
   const [customers, setCustomers] = useState([]);
   const [paginationData, setPaginationData] = useState({});
-  const [searchParams, setSearchParams] = useSearchParams();
   const [currentTen, setCurrentTen] = useState([]);
   const [currentPage, setCurrentPage] = useState(pageCurrent);
-  const [limit, setLimit] = useState(10);
 
   const { REACT_APP_API_BASE_URL } = process.env;
   useEffect(() => {

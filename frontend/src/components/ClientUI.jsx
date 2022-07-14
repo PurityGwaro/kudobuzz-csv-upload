@@ -11,7 +11,6 @@ export default function ClientUI() {
         <UploadButton />
         <ListUploads />
       </Container>
-      
     </div>
   );
 }

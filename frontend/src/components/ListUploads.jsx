@@ -21,10 +21,10 @@ export default function ListUploads() {
   }, []);
   const handleDelete = async (id) => {
     await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/uploads/${id}`);
-    setFiles(files.filter(file => file.id !== id));
+    setFiles(files.filter((file) => file.id !== id));
     //refresh page
     window.location.reload();
-  }
+  };
 
   return (
     <div className="container">
@@ -52,7 +52,10 @@ export default function ListUploads() {
                       >
                         view
                       </Link>
-                      <Button onClick={() => handleDelete(file._id)} className="btn float-right btn-danger btn-sm">
+                      <Button
+                        onClick={() => handleDelete(file._id)}
+                        className="btn float-right btn-danger btn-sm"
+                      >
                         delete
                       </Button>
                     </td>

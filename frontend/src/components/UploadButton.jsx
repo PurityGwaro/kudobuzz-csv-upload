@@ -1,16 +1,15 @@
-import Button from 'react-bootstrap/Button';
-
+import Button from "react-bootstrap/Button";
 
 export default function UploadButton() {
   function handleClick() {
-    window.location.href = '/upload';
+    window.location.href = "/upload";
   }
 
   return (
     <div>
-        <Button variant="secondary" onClick={handleClick} className="btn">
-          Upload CSV
-        </Button>
+      <Button variant="secondary" onClick={handleClick} className="btn">
+        Upload CSV
+      </Button>
     </div>
-  )
+  );
 }

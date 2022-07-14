@@ -6,9 +6,6 @@ import { useParams, useLocation } from "react-router-dom";
 export default function EditCustomer() {
   const { REACT_APP_API_BASE_URL } = process.env;
   const [customer, setCustomer] = useState({});
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
 
   const useQuery = () => new URLSearchParams(useLocation().search);
 
@@ -27,7 +24,7 @@ export default function EditCustomer() {
 
   const handleChange = (e) => {
     setCustomer({ ...customer, [e.target.name]: e.target.value });
-    console.log(customer);
+    //console.log(customer);
   };
 
   // change values in the form to the values edited on the form by the user

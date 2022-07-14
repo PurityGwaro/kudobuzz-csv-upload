@@ -1,10 +1,9 @@
 import { Pagination } from "react-bootstrap";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function CustomPagination({ total, perPage, currentPage, handleOnAdjustPage }) {
 
-  const totalPages = Math.ceil(total / perPage);
+  const totalPages = total == 0 ? 0 : Math.ceil(total / perPage);
+
   function adjustPage(page) { 
     handleOnAdjustPage(page);
   }
