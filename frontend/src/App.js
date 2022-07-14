@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// code splitting to allow only the required components to be loaded
 const ViewCsv = React.lazy(() => import('./components/ViewCsv'));
 const Error = React.lazy(() => import('./components/Error'));
 const ClientUI = React.lazy(() => import('./components/ClientUI'));

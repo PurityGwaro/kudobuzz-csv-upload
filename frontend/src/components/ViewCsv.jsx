@@ -15,9 +15,7 @@ export default function CustomerUI() {
     console.log({page});
   } 
 
-  let { id } = useParams();
-  
-  
+  let { id } = useParams(); 
   const [customers, setCustomers] = useState([]);
   const [paginationData, setPaginationData] = useState({});
   const [currentTen, setCurrentTen] = useState([]);
@@ -35,14 +33,10 @@ export default function CustomerUI() {
           const customerDataResponse = JSON.parse(
             JSON.stringify(data.customerData)
           );
-
-          delete customerDataResponse["docs"];
+          
           setPaginationData(customerDataResponse);
           setCustomers(data.customerData);
           handleAdjustPage(currentPage, data.customerData);
-          //setCurrentTen(data.customerData.slice(0, limit));
-          //console.log(data.customerData);
-          console.log(currentTen)
         }
       });
   }, [id, currentPage]);
@@ -101,7 +95,7 @@ export default function CustomerUI() {
                       >
                         edit
                       </Link>
-                      <Button  onClick={()=> handleDelete(customer._id)} variant="danger" className="float-right btn-sm">
+                      <Button  onClick={()=> handleDelete(customer._id)} variant="danger" className="float-right btn-sm ms-2">
                         delete
                       </Button>
                     </td>

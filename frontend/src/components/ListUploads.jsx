@@ -48,13 +48,13 @@ export default function ListUploads() {
                     <td>
                       <Link
                         to={`/csv/${file._id}`}
-                        className="btn float-right btn-primary btn-sm "
+                        className="btn float-right btn-primary btn-sm"
                       >
                         view
                       </Link>
                       <Button
                         onClick={() => handleDelete(file._id)}
-                        className="btn float-right btn-danger btn-sm"
+                        className="btn float-right btn-danger btn-sm ms-2"
                       >
                         delete
                       </Button>
