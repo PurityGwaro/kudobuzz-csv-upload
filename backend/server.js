@@ -107,20 +107,21 @@ app.get("/api/uploads", async (req, res) => {
 });
 
 app.get("/api/records/:id", async (req, res) => {
-  const customerData = await Customer.paginate(
-    {
-      fileId: req.params.id,
-    },
-    {
-      page: req.query.page || 1,
-      limit: req.query.perPage || 10,
-    }
-  ).then((customers) => {
-    console.log(customers);
-    return customers;
-  }).catch((err) => {
-    console.log(err);
-  });
+  // const customerData = await Customer.paginate(
+  //   {
+  //     fileId: req.params.id,
+  //   },
+  //   {
+  //     page: req.query.page || 1,
+  //     limit: req.query.perPage || 10,
+  //   }
+  // ).then((customers) => {
+  //   console.log(customers);
+  //   return customers;
+  // }).catch((err) => {
+  //   console.log(err);
+  // });
+  const customerData = await Customer.find().sort({ createdAt: -1 });
   //console.log(customerData);
   res.json({
     customerData,
@@ -162,16 +163,12 @@ app.put("/api/customer/:id", async (req, res) => {
 
   //console.log({ filter, data });
 
-  let doc = await Customer.findOne({ id: req.params.id });
-
+  //let doc = await Customer.findOne({ id: req.params.id });
+  let doc = await Customer.findByIdAndUpdate(req.params.id, data, {
+    upsert: false,
+  });
   console.log({ doc });
-  doc.name = req.body.name;
-  //console.log(req.body.name);
-  doc.email = req.body.email;
-  doc.phone = req.body.phone;
-
-  await doc.save();
-  console.log({ doc });
+  
   res.json({
     message: "Updated",
     data: doc,

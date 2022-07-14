@@ -2,12 +2,11 @@ import { Pagination } from "react-bootstrap";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function CustomPagination({ paginationData, url }) {
-  const navigate = useNavigate();
+export default function CustomPagination({ total, perPage, currentPage, handleOnAdjustPage }) {
 
-  const { page, totalPages, hasNextPage, hasPrevPage, limit } = paginationData;
-  function adjustPage(page) {
-    navigate(`?page=${page}&limit=${limit}`);
+  const totalPages = Math.ceil(total / perPage);
+  function adjustPage(page) { 
+    handleOnAdjustPage(page);
   }
 
   const paginationItems = [];
@@ -17,7 +16,7 @@ export default function CustomPagination({ paginationData, url }) {
       <Pagination.Item
         key={number}
         onClick={() => adjustPage(number)}
-        active={number === page}
+        active={number == currentPage}
       >
         {number}
       </Pagination.Item>

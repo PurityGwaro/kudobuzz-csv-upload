@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 export default function EditCustomer() {
   const { REACT_APP_API_BASE_URL } = process.env;
   const [customer, setCustomer] = useState({});
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const useQuery = () => new URLSearchParams(useLocation().search);
+
+  let query = useQuery();
+
+  useEffect(() => {
+    setCustomer({
+      name: query.get("name"), 
+      email: query.get("email"), 
+      phone: query.get("phone")
+    });
+    //console.log(location);
+  }, []);
 
   const { id } = useParams();
 
@@ -18,7 +34,8 @@ export default function EditCustomer() {
   const handleEdit = (e) => {
     console.log(id);
     e.preventDefault();
-    axios
+    axios 
+    // used to make http requests
       .put(`${REACT_APP_API_BASE_URL}/customer/${id}`, customer)
       .then(({ data, status }) => {
         if (status === 200) {

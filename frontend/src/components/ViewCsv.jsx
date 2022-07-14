@@ -5,18 +5,32 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import CustomPagination from "./Pagination";
 
 export default function CustomerUI() {
+  const pageCurrent = window.localStorage.getItem('currentPage') || 1;
+  console.log({pageCurrent});
+
+  const handleAdjustPage = (page, customerData) => {
+    setCurrentPage(page);
+    setCurrentTen(customerData.slice((page-1)*10, page*10));
+    window.localStorage.setItem('currentPage', page);
+    console.log({page});
+  } 
+
   let { id } = useParams();
+  
+  
   const [customers, setCustomers] = useState([]);
   const [paginationData, setPaginationData] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
+  const [currentTen, setCurrentTen] = useState([]);
+  const [currentPage, setCurrentPage] = useState(pageCurrent);
+  const [limit, setLimit] = useState(10);
 
   const { REACT_APP_API_BASE_URL } = process.env;
   useEffect(() => {
-    let page = searchParams.get("page") || 1;
-    let limit = searchParams.get("limit") || 10;
+    
     axios
       .get(
-        `${REACT_APP_API_BASE_URL}/records/${id}?page=${page}&perPage=${limit}`
+        `${REACT_APP_API_BASE_URL}/records/${id}`
       )
       .then(({ data, status }) => {
         if (status === 200) {
@@ -26,10 +40,14 @@ export default function CustomerUI() {
 
           delete customerDataResponse["docs"];
           setPaginationData(customerDataResponse);
-          setCustomers(data.customerData?.docs);
+          setCustomers(data.customerData);
+          handleAdjustPage(currentPage, data.customerData);
+          //setCurrentTen(data.customerData.slice(0, limit));
+          //console.log(data.customerData);
+          console.log(currentTen)
         }
       });
-  }, [id, searchParams]);
+  }, [id, currentPage]);
 
   const handleDelete = (id) => {
     //console.log(id);
@@ -43,16 +61,13 @@ export default function CustomerUI() {
       //reload page
       window.location.reload();
   }
-
-  // const handleEdit = (id) => {
-  //   window.location.href = `/edit/${id}`;
-  // }
+  
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-10 offset-md-1">
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th>Name</th>
@@ -62,7 +77,7 @@ export default function CustomerUI() {
               </tr>
             </thead>
             <tbody>
-              {customers.map((customer, index) => {
+              {currentTen.map((customer, index) => {
                 return (
                   <tr key={customer._id}>
                     <td>{customer.name}</td>
@@ -71,7 +86,21 @@ export default function CustomerUI() {
                     <td>{customer.createdAt}</td>
                     <td>
                       {/* edit button */}
-                      <Link to={`/edit/${customer._id}`} className="btn float-right btn-primary btn-sm">
+                      <Link 
+                      // to={`/edit/${customer._id}`} 
+                      to={{
+                        pathname: `/edit/${customer._id}?name=${customer.name}&phone=${customer.phone}&email=${customer.email}`,
+                        state: {
+                          customer: customer
+                        },
+                        query: {
+                          name: customer.name,
+                          email: customer.email,
+                          phone: customer.phone,
+                        }
+                      }}
+                      className="btn float-right btn-primary btn-sm" 
+                      >
                         edit
                       </Link>
                       <Button  onClick={()=> handleDelete(customer._id)} variant="danger" className="float-right btn-sm">
@@ -84,7 +113,7 @@ export default function CustomerUI() {
             </tbody>
           </table>
           <div className="mb-2">
-            <CustomPagination paginationData={paginationData} />
+            <CustomPagination total={customers.length} perPage={10} currentPage={currentPage} handleOnAdjustPage={handleAdjustPage} />
           </div>
           <Link to='/' className="btn btn-primary">
             Back
