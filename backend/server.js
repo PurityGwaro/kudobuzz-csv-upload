@@ -33,7 +33,7 @@ app.post("/api/upload", upload.single("csv_file"), (req, res) => {
   if (req.file.originalname.split(".")[1] !== "csv") {
     return res.status(400).json({ error: "Only csv file allowed" });
   }
-  
+
   //read file
   let csvData = req.file;
   //let fileExtension = csvData.originalname.split(".").pop();
@@ -119,7 +119,7 @@ app.get("/api/uploads", async (req, res) => {
 
 
 app.get("/api/records/:id", async (req, res) => {
-  const customerData = await Customer.find().sort({ createdAt: -1 });
+  const customerData = await Customer.find({ fileId: req.params.id }).sort({ createdAt: -1 });
   //console.log(customerData);
   res.json({
     customerData,
